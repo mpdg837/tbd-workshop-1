@@ -1,5 +1,5 @@
 project_name        = "tbd-2026l-150"
 iac_service_account = "tbd-2026l-150-lab@tbd-2026l-150.iam.gserviceaccount.com"
-github_org          = "mwiewior"
-github_repo         = "tbd-workshop-2"
-github_branch       = "feat/workshop-2026l-fixes"
+github_org          = "mpdg837"
+github_repo         = "tbd-workshop-1"
+github_branch       = "tbd_2026L_15"
