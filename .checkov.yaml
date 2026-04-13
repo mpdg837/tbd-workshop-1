@@ -1,6 +1,7 @@
 quiet: true
 download-external-modules: true
 skip-check:
+  - CKV_SECRET_9 # Ignore JSON Web Token warnings from the credentials file
   - CKV_GCP_74 # silencing due to the bug for checking private_ip_google_access in vpc module
   - CKV_SECRET_6
   - CKV_TF_1 # Ensure Terraform module sources use a commit hash

@@ -5,6 +5,7 @@ ENV OPENVSCODE="${OPENVSCODE_SERVER_ROOT}/bin/openvscode-server"
 ARG MINICONDA_ROOT=/opt/miniconda3
 USER root
 # Terraform
+# hadolint ignore=DL3015,DL3047
 RUN apt-get update && \
     apt-get install -y gnupg software-properties-common wget && \
     wget -O- https://apt.releases.hashicorp.com/gpg | \
@@ -17,6 +18,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # gcloud
+# hadolint ignore=DL3015
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | \
     tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | \
     apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
@@ -25,6 +27,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
     rm -rf /var/lib/apt/lists/*
 
 # miniconda 3.10
+# hadolint ignore=DL3047
 RUN mkdir -p $MINICONDA_ROOT && \
     wget  https://repo.anaconda.com/miniconda/Miniconda3-py310_23.3.1-0-Linux-x86_64.sh -O $MINICONDA_ROOT/miniconda.sh && \
     bash $MINICONDA_ROOT/miniconda.sh -b -u -p $MINICONDA_ROOT && \
@@ -40,21 +43,25 @@ RUN pip3 install --no-cache-dir gsutil==5.24
 # pre-commit deps
 RUN pip3 install --no-cache-dir pre-commit==3.3.3 checkov==2.3.294
 
+# hadolint ignore=DL3015,DL3009
 RUN apt-get update -y && apt-get install unzip -y
 RUN curl -L "$(curl -s https://api.github.com/repos/terraform-docs/terraform-docs/releases/latest | grep -o -E -m 1 "https://.+?-linux-amd64.tar.gz")" > terraform-docs.tgz && tar -xzf terraform-docs.tgz terraform-docs && rm terraform-docs.tgz && chmod +x terraform-docs && mv terraform-docs /usr/bin/
 RUN curl -L "$(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E -m 1 "https://.+?_Linux_x86_64.tar.gz")" > terrascan.tar.gz && tar -xzf terrascan.tar.gz terrascan && rm terrascan.tar.gz && mv terrascan /usr/bin/ && terrascan init
 RUN curl -L "$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E -m 1 "https://.+?_linux_amd64.zip")" > tflint.zip && unzip tflint.zip && rm tflint.zip && mv tflint /usr/bin/
 RUN curl -L "$(curl -s https://api.github.com/repos/aquasecurity/tfsec/releases/latest | grep -o -E -m 1 "https://.+?tfsec-linux-amd64")" > tfsec && chmod +x tfsec &&  mv tfsec /usr/bin/
+# hadolint ignore=DL3015,DL3009
 RUN apt-get update -y && apt-get install -y jq && \
     curl -L "$(curl -s https://api.github.com/repos/minamijoyo/tfupdate/releases/latest | grep -o -E -m 1 "https://.+?_linux_amd64.tar.gz")" > tfupdate.tar.gz && tar -xzf tfupdate.tar.gz tfupdate && rm tfupdate.tar.gz && mv tfupdate /usr/bin/ && \
     curl -L "$(curl -s https://api.github.com/repos/minamijoyo/hcledit/releases/latest | grep -o -E -m 1 "https://.+?_linux_amd64.tar.gz")" > hcledit.tar.gz && tar -xzf hcledit.tar.gz hcledit && rm hcledit.tar.gz && mv hcledit /usr/bin/
 
 # hadolint
+# hadolint ignore=DL3047
 RUN wget https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/hadolint-Linux-x86_64 && \
     mv hadolint-Linux-x86_64 /usr/bin/hadolint && \
     chmod +x /usr/bin/hadolint
 
 # docker
+# hadolint ignore=DL3015
 RUN install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
     chmod a+r /etc/apt/keyrings/docker.gpg && \
