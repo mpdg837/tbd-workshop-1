@@ -38,6 +38,3 @@ terraform.rc
 .DS_Store
 bootstrap/terraform.tfstate_*
 bin/
-
-# Exclude generated Github Action credentials to prevent CKV_SECRET failures
-gha-creds*.json
