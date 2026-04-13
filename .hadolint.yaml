@@ -4,9 +4,6 @@ ignored:
   - DL4001
   - DL4006
   - DL3003
-  - DL3015
-  - DL3047
-  - DL3009
 
 # to remove for workshop, pining pip version
 # FIXME:remove

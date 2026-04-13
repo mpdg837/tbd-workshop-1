@@ -65,12 +65,6 @@ resource "google_container_cluster" "airflow" {
     workload_pool = "${var.project_name}.svc.id.goog"
   }
 
-  node_config {
-    workload_metadata_config {
-      mode = "GKE_METADATA"
-    }
-  }
-
   # Skip CKV_GCP_65 (Manage Kubernetes RBAC users with Google Groups for GKE)
   # as it requires a verified Google Workspace domain which we do not have here.
   #checkov:skip=CKV_GCP_65: "Cannot configure RBAC groups without a valid Google Workspace domain."
@@ -93,8 +87,6 @@ resource "google_container_cluster" "airflow" {
   network_policy {
     enabled = true
   }
-
-  enable_intranode_visibility = true
 
   logging_config {
     enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]
@@ -135,8 +127,7 @@ resource "google_container_node_pool" "airflow_nodes" {
     }
 
     shielded_instance_config {
-      enable_secure_boot          = true
-      enable_integrity_monitoring = true
+      enable_secure_boot = true
     }
   }
 }
