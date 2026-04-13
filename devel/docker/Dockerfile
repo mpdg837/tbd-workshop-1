@@ -61,7 +61,7 @@ RUN wget https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/had
     chmod +x /usr/bin/hadolint
 
 # docker
-# hadolint ignore=DL3015
+# hadolint ignore=DL3015,SC1091
 RUN install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
     chmod a+r /etc/apt/keyrings/docker.gpg && \
@@ -76,6 +76,7 @@ RUN usermod -aG docker openvscode-server
 USER openvscode-server
 
 SHELL ["/bin/bash", "-c"]
+# hadolint ignore=DL3047
 RUN \
     # Direct download links to external .vsix not available on https://open-vsx.org/
     # The two links here are just used as example, they are actually available on https://open-vsx.org/
