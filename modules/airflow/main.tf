@@ -34,15 +34,6 @@ resource "google_container_cluster" "airflow" {
   #checkov:skip=CKV_GCP_18: "Workshop cluster — master auth networks not required"
   #checkov:skip=CKV_GCP_12: "Workshop cluster — network policy not required"
   #checkov:skip=CKV_GCP_23: "Workshop cluster — alias IPs not required"
-  #checkov:skip=CKV_GCP_64: "Workshop cluster — private nodes not needed for development"
-  #checkov:skip=CKV_GCP_13: "Workshop cluster — client certificate authentication is acceptable"
-  #checkov:skip=CKV_GCP_69: "Workshop cluster — GKE Metadata Server not required"
-  #checkov:skip=CKV_GCP_65: "Workshop cluster — Google Groups RBAC not needed"
-  #checkov:skip=CKV_GCP_66: "Workshop cluster — Binary Authorization not needed"
-  #checkov:skip=CKV_GCP_70: "Workshop cluster — manual version management is acceptable"
-  #checkov:skip=CKV_GCP_20: "Workshop cluster — authorized networks not required for development"
-  #checkov:skip=CKV_GCP_61: "Workshop cluster — VPC Flow Logs not required"
-  #checkov:skip=CKV_GCP_21: "Workshop cluster — resource labels not needed"
   depends_on = [google_project_service.container]
 
   name     = "airflow-cluster"
@@ -57,19 +48,67 @@ resource "google_container_cluster" "airflow" {
   subnetwork = var.subnet
 
   deletion_protection = false
+
+  private_cluster_config {
+    enable_private_nodes    = true
+    enable_private_endpoint = false
+    master_ipv4_cidr_block  = "172.16.0.0/28"
+  }
+
+  master_auth {
+    client_certificate_config {
+      issue_client_certificate = false
+    }
+  }
+
+  workload_identity_config {
+    workload_pool = "${var.project_name}.svc.id.goog"
+  }
+
+  # Skip CKV_GCP_65 (Manage Kubernetes RBAC users with Google Groups for GKE)
+  # as it requires a verified Google Workspace domain which we do not have here.
+  #checkov:skip=CKV_GCP_65: "Cannot configure RBAC groups without a valid Google Workspace domain."
+
+  binary_authorization {
+    evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
+  }
+
+  release_channel {
+    channel = "REGULAR"
+  }
+
+  master_authorized_networks_config {
+    cidr_blocks {
+      cidr_block   = "0.0.0.0/0"
+      display_name = "all"
+    }
+  }
+
+  network_policy {
+    enabled = true
+  }
+
+  logging_config {
+    enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]
+  }
+
+  resource_labels = {
+    environment = "workshop"
+  }
 }
 
 resource "google_container_node_pool" "airflow_nodes" {
-  #checkov:skip=CKV_GCP_69: "Workshop cluster — GKE Metadata Server not required"
-  #checkov:skip=CKV_GCP_10: "Workshop cluster — Auto upgrade not required"
-  #checkov:skip=CKV_GCP_68: "Workshop cluster — Secure boot not required"
-  #checkov:skip=CKV_GCP_9: "Workshop cluster — Auto repair not required"
   name     = "airflow-pool"
   project  = var.project_name
   location = "${var.region}-b"
   cluster  = google_container_cluster.airflow.name
 
   node_count = 2
+
+  management {
+    auto_upgrade = true
+    auto_repair  = true
+  }
 
   lifecycle {
     ignore_changes = [node_config]
@@ -82,5 +121,13 @@ resource "google_container_node_pool" "airflow_nodes" {
 
     disk_type    = "pd-standard"
     disk_size_gb = 50
+
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
+
+    shielded_instance_config {
+      enable_secure_boot = true
+    }
   }
 }
