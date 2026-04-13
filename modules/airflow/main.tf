@@ -49,6 +49,14 @@ resource "google_container_cluster" "airflow" {
 
   deletion_protection = false
 
+  enable_intranode_visibility = true
+
+  node_config {
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
+  }
+
   private_cluster_config {
     enable_private_nodes    = true
     enable_private_endpoint = false
@@ -127,7 +135,8 @@ resource "google_container_node_pool" "airflow_nodes" {
     }
 
     shielded_instance_config {
-      enable_secure_boot = true
+      enable_secure_boot          = true
+      enable_integrity_monitoring = true
     }
   }
 }
