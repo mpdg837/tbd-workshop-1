@@ -55,6 +55,7 @@ RUN wget -q https://github.com/hadolint/hadolint/releases/download/v2.12.1-beta/
     chmod +x /usr/bin/hadolint
 
 # docker
+# shellcheck disable=SC1091
 RUN install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
     chmod a+r /etc/apt/keyrings/docker.gpg && \

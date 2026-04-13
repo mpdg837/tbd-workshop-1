@@ -13,6 +13,7 @@ skip-check:
   - CKV_DOCKER_3 # "Ensure that a user for the container has been created"
   - CKV_DOCKER_2 # "Ensure that HEALTHCHECK instructions have been added to container images"
   - CKV2_GCP_12 # "Ensure GCP compute firewall ingress does not allow unrestricted access to all ports"
+  - CKV_SECRET_9 # "JSON Web Token" (To prevent tripping on dynamic github action secrets)
 
 skip-path:
  - gha-creds-*json

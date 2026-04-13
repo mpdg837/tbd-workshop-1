@@ -69,6 +69,11 @@ resource "google_container_cluster" "airflow" {
     workload_metadata_config {
       mode = "GKE_METADATA"
     }
+
+    shielded_instance_config {
+      enable_secure_boot          = true
+      enable_integrity_monitoring = true
+    }
   }
 
   # Skip CKV_GCP_65 (Manage Kubernetes RBAC users with Google Groups for GKE)

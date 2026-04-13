@@ -31,6 +31,7 @@ ENV PYTHONIOENCODING=utf-8
 ENV LANG=C.UTF-8
 
 # Update python and install packages
+# hadolint ignore=DL3013
 RUN pip install --upgrade pip setuptools wheel --no-cache-dir \
   dbt-core==$DBT_VERSION \
   dbt-spark==$DBT_SPARK_VERSION \
