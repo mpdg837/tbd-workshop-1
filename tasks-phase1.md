@@ -82,10 +82,18 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     ![alt text](graph.png)
 
     The graph represents a Terraform module that provisions a Google Cloud Kubernetes (GKE) cluster for Airflow along with its supporting infrastructure. The central resource is google_container_cluster.airflow, which depends on configuration variables such as network, region, and subnet. A node pool (google_container_node_pool.airflow_nodes) is created on top of the cluster to handle workloads. The module also defines a service account and assigns multiple IAM roles required for accessing GCP services like storage and Dataproc. Additionally, required services are enabled and outputs provide cluster connection details and service account information.
+
 6. Reach YARN UI
 
-   ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
+    Command:
 
+    tbd-workshop-1 % gcloud compute ssh tbd-cluster-m \
+    --project tbd-2026l-150 \
+    --zone europe-west1-b \
+    --tunnel-through-iap \
+    -- -L 8088:localhost:8088
+
+    ![alt text](yarnui.webp) 
    Hint: the Dataproc cluster has `internal_ip_only = true`, so you need to use an IAP tunnel.
    See: `gcloud compute ssh` with `-- -L <local_port>:localhost:<remote_port>` and `--tunnel-through-iap` flag.
    YARN ResourceManager UI runs on port **8088**.
@@ -94,7 +102,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     1. Description of the components of service accounts
     2. List of buckets for disposal
 
-    ***place your diagram here***
+    ![alt text](architecture-phase1.png)
 
 8. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry_repository`, `google_storage_bucket`

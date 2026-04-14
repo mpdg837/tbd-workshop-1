@@ -1,0 +1,40 @@
+version: 0.1
+resource_usage:
+  module.data-pipelines.google_storage_bucket.tbd-code-bucket:
+    storage_gb: 150 # Total storage for the bucket in GB
+    monthly_class_a_operations: 100000 # Example read/write operations
+    monthly_class_b_operations: 500000
+    monthly_data_retrieval_gb: 50
+    monthly_egress_data_transfer_gb:
+      same_continent: 100
+      worldwide: 20
+
+  module.data-pipelines.google_storage_bucket.tbd-data-bucket:
+    storage_gb: 150 # Total storage for the bucket in GB
+    monthly_class_a_operations: 100000 # Example read/write operations
+    monthly_class_b_operations: 500000
+    monthly_data_retrieval_gb: 50
+    monthly_egress_data_transfer_gb:
+      same_continent: 100
+      worldwide: 20
+
+  module.dataproc.google_storage_bucket.dataproc_staging:
+    storage_gb: 150 # Total storage for the bucket in GB
+    monthly_class_a_operations: 100000 # Example read/write operations
+    monthly_class_b_operations: 500000
+    monthly_data_retrieval_gb: 50
+    monthly_egress_data_transfer_gb:
+      same_continent: 100
+      worldwide: 20
+
+  module.dataproc.google_storage_bucket.dataproc_temp:
+    storage_gb: 150 # Total storage for the bucket in GB
+    monthly_class_a_operations: 100000 # Example read/write operations
+    monthly_class_b_operations: 500000
+    monthly_data_retrieval_gb: 50
+    monthly_egress_data_transfer_gb:
+      same_continent: 100
+      worldwide: 20
+
+  module.gcr.google_artifact_registry_repository.registry:
+    storage_gb: 50 # Total storage for the repository in GB
