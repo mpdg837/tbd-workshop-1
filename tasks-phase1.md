@@ -79,7 +79,9 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 5. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
     ***describe one selected module and put the output of terraform graph for this module here***
+    ![alt text](graph.png)
 
+    The graph represents a Terraform module that provisions a Google Cloud Kubernetes (GKE) cluster for Airflow along with its supporting infrastructure. The central resource is google_container_cluster.airflow, which depends on configuration variables such as network, region, and subnet. A node pool (google_container_node_pool.airflow_nodes) is created on top of the cluster to handle workloads. The module also defines a service account and assigns multiple IAM roles required for accessing GCP services like storage and Dataproc. Additionally, required services are enabled and outputs provide cluster connection details and service account information.
 6. Reach YARN UI
 
    ***place the command you used for setting up the tunnel, the port and the screenshot of YARN UI here***
