@@ -134,9 +134,10 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
 
     b) The DAG will fail. Examine the task logs in the Airflow UI to find the root cause.
 
-    ***paste the relevant error message from the Airflow task log***
+    google.api_core.exceptions.PermissionDenied: 403 Permission 'dataproc.clusters.use' denied on resource '//dataproc.googleapis.com/projects/tbd-2026l-150/regions/europe-west1/clusters/tbd-cluster' (or it may not exist). [reason: "IAM_PERMISSION_DENIED"
+    domain: "dataproc.googleapis.com"
 
-    ***describe what the error is and how you found it***
+    This is a permission error from Google Cloud indicating that access to a Dataproc cluster was denied. It specifically means the account does not have the required dataproc.clusters.use permission. I recognized the type of error from the HTTP status code 403 and the phrase “Permission denied.” I then identified the exact cause by looking at the missing permission mentioned in the message. Based on these clues, it is clear that the issue is related to insufficient IAM roles or access rights.
 
     c) Fix the error in `modules/data-pipeline/resources/spark-job.py` and re-upload the file to GCS:
     ```bash
