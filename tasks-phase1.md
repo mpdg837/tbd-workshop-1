@@ -155,6 +155,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ```
 
     ***place a screenshot of the successful DAG run in Airflow UI***
+    ![alt text](image-2.png)
 
 11. Create a BigQuery dataset and an external table using SQL
 
