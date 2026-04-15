@@ -275,6 +275,19 @@ resource "helm_release" "airflow" {
     name  = "env[3].value"
     value = module.dataproc.dataproc_cluster_name
   }
+  # Tell Kubernetes to link these KSAs to the GCP Service Account
+  set {
+    name  = "scheduler.serviceAccount.annotations.iam\\.gke\\.io/gcp-service-account"
+    value = module.airflow.service_account
+  }
+  set {
+    name  = "workers.serviceAccount.annotations.iam\\.gke\\.io/gcp-service-account"
+    value = module.airflow.service_account
+  }
+  set {
+    name  = "webserver.serviceAccount.annotations.iam\\.gke\\.io/gcp-service-account"
+    value = module.airflow.service_account
+  }
 }
 
 # Standalone PostgreSQL for Airflow (bitnami images removed from DockerHub)

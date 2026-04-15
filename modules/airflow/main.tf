@@ -144,3 +144,21 @@ resource "google_container_node_pool" "airflow_nodes" {
     }
   }
 }
+# Bind Airflow Kubernetes Service Accounts to the Google Service Account via Workload Identity
+resource "google_service_account_iam_member" "airflow_wi_scheduler" {
+  service_account_id = google_service_account.airflow_sa.id
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.project_name}.svc.id.goog[airflow/airflow-scheduler]"
+}
+
+resource "google_service_account_iam_member" "airflow_wi_worker" {
+  service_account_id = google_service_account.airflow_sa.id
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.project_name}.svc.id.goog[airflow/airflow-worker]"
+}
+
+resource "google_service_account_iam_member" "airflow_wi_webserver" {
+  service_account_id = google_service_account.airflow_sa.id
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.project_name}.svc.id.goog[airflow/airflow-webserver]"
+}
