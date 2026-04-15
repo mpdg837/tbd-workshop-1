@@ -53,7 +53,7 @@ resource "google_container_cluster" "airflow" {
 
   node_config {
     workload_metadata_config {
-      mode = "GCE_METADATA"
+      mode = "GKE_METADATA"
     }
     shielded_instance_config {
       enable_secure_boot          = true
