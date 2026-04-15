@@ -253,7 +253,7 @@ jobs:
       continue-on-error: false
 
 ***paste screenshot/log snippet confirming the auto-destroy ran***
-
+![alt text](image-6.png)
 
 ***write one sentence why scheduling cleanup helps in this workshop***
 Scheduling automated cleanup guarantees that expensive cloud resources are regularly destroyed, preventing massive unexpected Google Cloud billing charges in case a participant forgets to manually tear down their environment after a working session.
