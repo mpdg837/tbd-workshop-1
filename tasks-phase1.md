@@ -134,6 +134,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ![alt text](image.png)
 
     b) The DAG will fail. Examine the task logs in the Airflow UI to find the root cause.
+    ![alt text](image-1.png)
 
     google.api_core.exceptions.PermissionDenied: 403 Permission 'dataproc.clusters.use' denied on resource '//dataproc.googleapis.com/projects/tbd-2026l-150/regions/europe-west1/clusters/tbd-cluster' (or it may not exist). [reason: "IAM_PERMISSION_DENIED"
     domain: "dataproc.googleapis.com"
