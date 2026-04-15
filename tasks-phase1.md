@@ -110,7 +110,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
 
    ***place the expected consumption you entered here***
 
-   ***place the screenshot from infracost output here***
+    ![alt text](infraoutput.webp) 
 
 9. Find and correct the error in spark-job.py
 
