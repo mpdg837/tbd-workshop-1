@@ -167,8 +167,16 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     ```
 
     ***place the SQL code and query output here***
+    ![alt text](image-3.png)
+    ![alt text](image-4.png)
+    ![alt text](image-5.png)
+Bucket/output: gs://tbd-2026l-150-data/data/shakespeare/
+    Dataset: shakespeare w lokalizacji europe-west1
+External table: tbd-2026l-150.shakespeare.shakespeare_orc
 
     ***why does ORC not require a table schema?***
+    ORC does not require manual schema specification because it is a self-describing format. The column schema, their types, and metadata are stored within the ORC files themselves, so BigQuery can read them automatically. This is unlike CSV, for example, where the file usually does not store data types, and therefore the schema often needs to be provided manually. The only catch is that all ORC files referenced in the table should have a consistent schema.
+    
 
 12. Add support for preemptible/spot instances in a Dataproc cluster
 
