@@ -131,6 +131,7 @@ create a sample usage profiles and add it to the Infracost task in CI/CD pipelin
     a) In the Airflow UI (http://AIRFLOW_EXTERNAL_IP:8080, login: admin/admin), find the `dataproc_job` DAG, unpause it and trigger it manually.
 
     ![alt text](DAGa.webp) 
+    ![alt text](image.png)
 
     b) The DAG will fail. Examine the task logs in the Airflow UI to find the root cause.
 
