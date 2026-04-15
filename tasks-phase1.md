@@ -181,6 +181,11 @@ External table: tbd-2026l-150.shakespeare.shakespeare_orc
 12. Add support for preemptible/spot instances in a Dataproc cluster
 
     ***place the link to the modified file and inserted terraform code***
+    https://github.com/mpdg837/tbd-workshop-1/blob/master/modules/dataproc/main.tf
+
+    preemptible_worker_config {
+      num_instances = 2
+    }
 
 13. Triggered Terraform Destroy on Schedule or After PR Merge. Goal: make sure we never forget to clean up resources and burn money.
 
