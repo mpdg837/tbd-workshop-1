@@ -73,9 +73,9 @@ resource "google_container_cluster" "airflow" {
     }
   }
 
-  workload_identity_config {
-    workload_pool = "${var.project_name}.svc.id.goog"
-  }
+#  workload_identity_config {
+#    workload_pool = "${var.project_name}.svc.id.goog"
+#  }
 
   # Skip CKV_GCP_65 (Manage Kubernetes RBAC users with Google Groups for GKE)
   # as it requires a verified Google Workspace domain which we do not have here.
@@ -134,9 +134,9 @@ resource "google_container_node_pool" "airflow_nodes" {
     disk_type    = "pd-standard"
     disk_size_gb = 50
 
-    workload_metadata_config {
-      mode = "GKE_METADATA"
-    }
+#    workload_metadata_config {
+#      mode = "GKE_METADATA"
+#    }
 
     shielded_instance_config {
       enable_secure_boot          = true
